@@ -1,0 +1,454 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>PitchPredict · World Cup 2026 Round of 32 · Kalshi-style</title>
+<style>
+  :root{
+    --bg:#080b0e; --app:#0d1217; --panel:#12181e; --panel2:#161d24; --line:#222c34;
+    --txt:#eef3f6; --mut:#8c99a4; --mut2:#5d6872;
+    --yes:#00c187; --yesb:rgba(0,193,135,.13); --yesbd:rgba(0,193,135,.4);
+    --no:#f0476a; --nob:rgba(240,71,106,.11); --nobd:rgba(240,71,106,.36);
+    --mint:#1ce7ac; --amber:#f5b14b;
+  }
+  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent}
+  body{margin:0; background:radial-gradient(900px 500px at 50% -10%,#10171d,#05070a 70%);
+    color:var(--txt); font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,Arial,sans-serif;
+    display:flex; justify-content:center; padding:22px 12px; min-height:100vh}
+  .app{width:460px; max-width:100%; background:var(--app); border-radius:26px;
+    border:1px solid #1b232a; overflow:hidden; box-shadow:0 30px 90px rgba(0,0,0,.6)}
+
+  .top{display:flex; align-items:center; justify-content:space-between; padding:15px 17px 13px;
+    border-bottom:1px solid var(--line); position:sticky; top:0; background:var(--app); z-index:5}
+  .brand{display:flex; align-items:center; gap:9px; font-weight:800; letter-spacing:-.3px; font-size:17px}
+  .brand .dot{width:23px; height:23px; border-radius:7px; background:var(--mint); color:#04201a;
+    display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:900}
+  .pv{text-align:right; cursor:pointer}
+  .pv .lbl{font-size:9.5px; color:var(--mut2); letter-spacing:.5px; text-transform:uppercase}
+  .pv .amt{font-size:17px; font-weight:800; color:var(--mint); transition:color .3s}
+  .pv .amt.dn{color:var(--no)}
+
+  .pstrip{display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--line)}
+  .pcell{background:var(--panel); padding:9px 6px; text-align:center}
+  .pcell .v{font-size:14px; font-weight:800}
+  .pcell .k{font-size:9px; color:var(--mut2); text-transform:uppercase; letter-spacing:.4px; margin-top:2px}
+
+  .wrap{padding:13px 14px 20px}
+  .sech{font-size:11px; color:var(--mut2); text-transform:uppercase; letter-spacing:.7px; margin:6px 3px 11px;
+    display:flex; justify-content:space-between; align-items:center}
+  .back{color:var(--mint); font-weight:700; cursor:pointer; font-size:12px; text-transform:none; letter-spacing:0}
+
+  /* match list */
+  .mrow{display:flex; align-items:center; gap:11px; background:var(--panel); border:1px solid var(--line);
+    border-radius:13px; padding:11px 13px; margin-bottom:9px; cursor:pointer;
+    transition:transform .15s ease, border-color .15s ease, background .15s}
+  .mrow:hover{transform:translateY(-2px); border-color:#33414c; background:var(--panel2)}
+  .mrow .fl{font-size:18px}
+  .mrow .nm{flex:1; min-width:0}
+  .mrow .t{font-size:13.5px; font-weight:700; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+  .mrow .d{font-size:10.5px; color:var(--mut2); margin-top:1px}
+  .mrow .fav{text-align:right}
+  .mrow .fav .p{font-size:15px; font-weight:800; color:var(--yes)}
+  .mrow .fav .who{font-size:9.5px; color:var(--mut); margin-top:1px}
+  .arrow{color:var(--mut2); font-size:15px}
+
+  /* detail */
+  .fade{animation:fade .35s ease}
+  @keyframes fade{from{opacity:0; transform:translateY(8px)}to{opacity:1; transform:none}}
+  .ev{background:var(--panel); border:1px solid var(--line); border-radius:16px; padding:15px; margin-bottom:12px}
+  .teams{display:flex; align-items:center; justify-content:space-between}
+  .tm{display:flex; flex-direction:column; align-items:center; gap:5px; width:38%}
+  .tm .fl{font-size:30px}
+  .tm .nm{font-size:14px; font-weight:800; text-align:center}
+  .tm .su{font-size:9.5px; color:var(--mut2); text-align:center}
+  .tm .adv{font-size:23px; font-weight:800; margin-top:3px}
+  .midv{font-size:11px; color:var(--mut); font-weight:700}
+  .meta{text-align:center; font-size:10.5px; color:var(--mut2); margin-top:11px; padding-top:10px; border-top:1px solid var(--line)}
+
+  .card{background:var(--panel); border:1px solid var(--line); border-radius:14px; padding:14px; margin-bottom:12px}
+  .ctitle{font-size:12px; font-weight:800; letter-spacing:.3px; margin-bottom:11px; color:var(--mint); text-transform:uppercase}
+  /* W/D/L bars */
+  .br{margin-bottom:9px}
+  .br .lab{display:flex; justify-content:space-between; font-size:12px; margin-bottom:4px}
+  .br .lab b{font-weight:800}
+  .track{height:8px; border-radius:6px; background:#0c1217; overflow:hidden}
+  .track > i{display:block; height:100%; border-radius:6px; width:0; transition:width .8s cubic-bezier(.2,.8,.2,1)}
+  .fillY{background:var(--yes)} .fillD{background:var(--mut)} .fillN{background:#3f7bd6}
+
+  .xg{display:grid; grid-template-columns:1fr 1fr; gap:9px; margin-bottom:3px}
+  .xgc{background:#0e151b; border:1px solid var(--line); border-radius:11px; padding:11px; text-align:center}
+  .xgc .k{font-size:10px; color:var(--mut)}
+  .xgc .v{font-size:22px; font-weight:800; margin-top:3px}
+
+  .sl{display:flex; justify-content:space-between; font-size:12px; padding:6px 2px; border-top:1px dashed var(--line)}
+  .sl:first-of-type{border-top:none}
+  .sl .pc{color:var(--mut); font-weight:700}
+
+  .mkt{display:flex; align-items:center; justify-content:space-between; padding:9px 2px; border-top:1px solid var(--line); cursor:pointer; transition:background .15s; border-radius:8px}
+  .mkt:first-of-type{border-top:none}
+  .mkt:hover{background:var(--panel2)}
+  .mkt .nm{font-size:13px; font-weight:700}
+  .mkt .su{font-size:10px; color:var(--mut2)}
+  .pill{min-width:52px; text-align:center; font-size:13px; font-weight:800; padding:8px 9px; border-radius:9px;
+    background:var(--yesb); border:1px solid var(--yesbd); color:var(--yes)}
+  .pill.sel{background:var(--yes); color:#04201a}
+
+  /* ticket / calculator */
+  .ticket{background:linear-gradient(180deg,#13202a,#101820); border:1px solid #25333d; border-radius:14px; padding:15px; margin-bottom:12px}
+  .tkrow{display:flex; align-items:center; justify-content:space-between; font-size:12px; margin:7px 0}
+  .tkrow .k{color:var(--mut)}
+  .tkrow .v{font-weight:800}
+  .selname{font-size:13.5px; font-weight:800; margin-bottom:3px}
+  .selsub{font-size:10.5px; color:var(--mut2); margin-bottom:11px}
+  .inrow{display:flex; gap:9px; margin-bottom:6px}
+  .inq{flex:1}
+  .inq label{font-size:10px; color:var(--mut); display:block; margin-bottom:4px; letter-spacing:.3px}
+  .inq .ib{display:flex; align-items:center; background:#0c1217; border:1px solid var(--line); border-radius:10px; padding:0 10px}
+  .inq .ib span{color:var(--mut2); font-size:13px}
+  .inq input{width:100%; background:transparent; border:none; color:var(--txt); font-size:15px; font-weight:700; padding:10px 4px; outline:none}
+  .chips{display:flex; gap:6px; margin:8px 0 12px}
+  .chip{flex:1; text-align:center; font-size:11px; font-weight:700; padding:7px 0; border-radius:8px; background:#0c1217; border:1px solid var(--line); color:var(--mut); cursor:pointer; transition:.15s}
+  .chip:hover{border-color:var(--mint); color:var(--mint)}
+  .res{background:#0b1116; border:1px solid var(--line); border-radius:11px; padding:11px; margin-bottom:11px}
+  .big2{display:flex; justify-content:space-between; align-items:baseline; margin-bottom:7px}
+  .big2 .k{font-size:11px; color:var(--mut)}
+  .big2 .v{font-size:21px; font-weight:800; color:var(--yes)}
+  .edge{font-size:11px; padding:3px 8px; border-radius:6px; font-weight:800}
+  .edge.pos{background:var(--yesb); color:var(--yes)} .edge.neg{background:var(--nob); color:var(--no)}
+  .addbtn{width:100%; padding:13px; border:none; border-radius:11px; background:var(--mint); color:#04201a;
+    font-size:14px; font-weight:800; cursor:pointer; transition:.15s}
+  .addbtn:hover{filter:brightness(1.08)} .addbtn:active{transform:scale(.99)}
+  .addbtn.flash{background:var(--yes)}
+
+  /* portfolio */
+  .pos{display:flex; align-items:center; justify-content:space-between; background:var(--panel); border:1px solid var(--line); border-radius:11px; padding:10px 12px; margin-bottom:8px}
+  .pos .l .t{font-size:12.5px; font-weight:700}
+  .pos .l .s{font-size:10px; color:var(--mut2); margin-top:1px}
+  .pos .r{text-align:right}
+  .pos .r .pay{font-size:13px; font-weight:800; color:var(--yes)}
+  .pos .r .ev{font-size:10px; color:var(--mut)}
+  .rm{color:var(--mut2); cursor:pointer; font-size:16px; padding-left:10px}
+  .rm:hover{color:var(--no)}
+  .empty{text-align:center; color:var(--mut2); font-size:12px; padding:18px}
+  .foot{text-align:center; font-size:9.5px; color:var(--mut2); line-height:1.6; margin-top:14px; padding:12px 6px 0; border-top:1px solid var(--line)}
+  .disc{font-size:10px; color:var(--mut2); line-height:1.6; margin-top:9px}
+  /* flags grid */
+  .flags{display:grid; grid-template-columns:repeat(8,1fr); gap:6px; margin-bottom:14px}
+  .flg{aspect-ratio:1; display:flex; align-items:center; justify-content:center; font-size:20px;
+    background:var(--panel); border:1px solid var(--line); border-radius:10px; cursor:pointer;
+    transition:transform .15s, border-color .15s, background .15s; position:relative}
+  .flg:hover{transform:translateY(-2px) scale(1.05); border-color:var(--mint); background:var(--panel2)}
+  .flg .tip{position:absolute; bottom:-6px; left:50%; transform:translateX(-50%) translateY(100%);
+    background:#04201a; color:var(--mint); font-size:9px; font-weight:700; padding:2px 6px; border-radius:5px;
+    white-space:nowrap; opacity:0; pointer-events:none; transition:opacity .15s; z-index:9}
+  .flg:hover .tip{opacity:1}
+  /* growth projection */
+  .grow{background:linear-gradient(180deg,#11202a,#0e1820); border:1px solid #243440; border-radius:14px; padding:14px; margin-bottom:14px}
+  .grow .hd{display:flex; justify-content:space-between; align-items:center; margin-bottom:4px}
+  .grow .hd .t{font-size:12px; font-weight:800; color:var(--mint); text-transform:uppercase; letter-spacing:.3px}
+  .grow .hd .v{font-size:18px; font-weight:800; color:var(--yes)}
+  .grow canvas{width:100%; height:70px; display:block; margin:8px 0 4px}
+  .grow .slab{display:flex; align-items:center; gap:9px; font-size:11px; color:var(--mut); margin-top:6px}
+  .grow input[type=range]{flex:1; accent-color:var(--mint)}
+  .rec{display:flex; align-items:center; gap:8px; background:var(--yesb); border:1px solid var(--yesbd);
+    border-radius:10px; padding:9px 11px; margin:11px 0 4px}
+  .rec.skip{background:var(--nob); border-color:var(--nobd)}
+  .rec .ic{font-size:16px}
+  .rec .tx{font-size:11.5px; line-height:1.4}
+  .rec b{font-weight:800}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="top">
+    <div class="brand"><span class="dot">P</span> PitchPredict</div>
+    <div class="pv" onclick="setBankroll()">
+      <div class="lbl">Portfolio value</div>
+      <div class="amt" id="pvAmt">$50.00</div>
+    </div>
+  </div>
+
+  <div class="pstrip">
+    <div class="pcell"><div class="v" id="sCash">$50</div><div class="k">Cash</div></div>
+    <div class="pcell"><div class="v" id="sStake">$0</div><div class="k">Staked</div></div>
+    <div class="pcell"><div class="v" id="sPay">$0</div><div class="k">Max payout</div></div>
+    <div class="pcell"><div class="v" id="sEdge">$0</div><div class="k">Model edge</div></div>
+  </div>
+
+  <div class="wrap" id="view"></div>
+</div>
+
+<script>
+const DATA = [{"id":0,"date":"Jun 28","venue":"Los Angeles","a":"South Africa","af":"🇿🇦","asum":"2nd Group A · -1 GD","b":"Canada","bf":"🇨🇦","bsum":"2nd Group B · +5 GD","xgA":0.93,"xgB":1.81,"pA":19.1,"pD":22.9,"pB":58.1,"advA":29.3,"advB":70.7,"over25":51.6,"btts":50.6,"scores":[{"s":"0-1","p":11.7},{"s":"1-1","p":10.9},{"s":"0-2","p":10.6},{"s":"1-2","p":9.8}]},
+{"id":1,"date":"Jun 29","venue":"Houston","a":"Brazil","af":"🇧🇷","asum":"Won Group C · +6 GD","b":"Japan","bf":"🇯🇵","bsum":"2nd Group F · +4 GD","xgA":2.09,"xgB":1.0,"pA":62.3,"pD":20.4,"pB":17.3,"advA":73.5,"advB":26.5,"over25":59.7,"btts":55.5,"scores":[{"s":"2-1","p":9.9},{"s":"2-0","p":9.9},{"s":"1-1","p":9.5},{"s":"1-0","p":9.5}]},
+{"id":2,"date":"Jun 29","venue":"Philadelphia","a":"Germany","af":"🇩🇪","asum":"Won Group E · +6 GD","b":"Paraguay","bf":"🇵🇾","bsum":"3rd Group D · -2 GD","xgA":2.04,"xgB":0.95,"pA":62.6,"pD":20.7,"pB":16.8,"advA":73.9,"advB":26.1,"over25":57.3,"btts":53.2,"scores":[{"s":"2-0","p":10.5},{"s":"1-0","p":10.3},{"s":"2-1","p":9.9},{"s":"1-1","p":9.8}]},
+{"id":3,"date":"Jun 30","venue":"Boston","a":"Netherlands","af":"🇳🇱","asum":"Won Group F · +6 GD","b":"Morocco","bf":"🇲🇦","bsum":"2nd Group C · +3 GD","xgA":1.61,"xgB":1.32,"pA":44.2,"pD":24.4,"pB":31.4,"advA":57.6,"advB":42.4,"over25":55.9,"btts":58.5,"scores":[{"s":"1-1","p":11.4},{"s":"2-1","p":9.1},{"s":"1-0","p":8.6},{"s":"1-2","p":7.5}]},
+{"id":4,"date":"Jun 30","venue":"Atlanta","a":"France","af":"🇫🇷","asum":"Won Group I · +8 GD","b":"Sweden","bf":"🇸🇪","bsum":"3rd Group F · 0 GD","xgA":2.16,"xgB":0.97,"pA":64.5,"pD":19.6,"pB":15.9,"advA":75.3,"advB":24.7,"over25":60.6,"btts":55.0,"scores":[{"s":"2-0","p":10.2},{"s":"2-1","p":9.9},{"s":"1-0","p":9.4},{"s":"1-1","p":9.2}]},
+{"id":5,"date":"Jul 1","venue":"Seattle","a":"Ivory Coast","af":"🇨🇮","asum":"2nd Group E · +2 GD","b":"Norway","bf":"🇳🇴","bsum":"2nd Group I · +1 GD","xgA":1.35,"xgB":1.67,"pA":31.0,"pD":23.9,"pB":45.1,"advA":41.8,"advB":58.2,"over25":58.0,"btts":60.0,"scores":[{"s":"1-1","p":11.0},{"s":"1-2","p":9.2},{"s":"0-1","p":8.2},{"s":"2-1","p":7.4}]},
+{"id":6,"date":"Jul 1","venue":"Mexico City","a":"Mexico","af":"🇲🇽","asum":"Won Group A · +6 GD","b":"Ecuador","bf":"🇪🇨","bsum":"3rd Group E · 0 GD","xgA":1.55,"xgB":1.08,"pA":48.3,"pD":25.3,"pB":26.4,"advA":62.2,"advB":37.8,"over25":49.0,"btts":52.1,"scores":[{"s":"1-1","p":12.0},{"s":"1-0","p":11.2},{"s":"2-1","p":9.4},{"s":"2-0","p":8.7}]},
+{"id":7,"date":"Jul 1","venue":"Santa Clara","a":"USA","af":"🇺🇸","asum":"Won Group D · +4 GD","b":"Bosnia","bf":"🇧🇦","bsum":"3rd Group B · -1 GD","xgA":1.91,"xgB":1.09,"pA":56.6,"pD":22.1,"pB":21.3,"advA":68.7,"advB":31.3,"over25":57.8,"btts":56.6,"scores":[{"s":"1-1","p":10.3},{"s":"2-1","p":9.9},{"s":"1-0","p":9.5},{"s":"2-0","p":9.1}]},
+{"id":8,"date":"Jul 2","venue":"Dallas","a":"Belgium","af":"🇧🇪","asum":"Won Group G · +3 GD","b":"Senegal","bf":"🇸🇳","bsum":"3rd Group I · qualified","xgA":1.79,"xgB":1.36,"pA":47.5,"pD":23.1,"pB":29.4,"advA":60.2,"advB":39.8,"over25":60.9,"btts":61.9,"scores":[{"s":"1-1","p":10.4},{"s":"2-1","p":9.3},{"s":"1-0","p":7.7},{"s":"1-2","p":7.1}]},
+{"id":9,"date":"Jul 2","venue":"Miami","a":"England","af":"🏴","asum":"Won Group L · +2 GD","b":"DR Congo","bf":"🇨🇩","bsum":"3rd Group K · -1 GD","xgA":2.06,"xgB":1.03,"pA":61.1,"pD":20.7,"pB":18.1,"advA":72.5,"advB":27.5,"over25":59.5,"btts":55.9,"scores":[{"s":"2-1","p":9.9},{"s":"2-0","p":9.7},{"s":"1-1","p":9.7},{"s":"1-0","p":9.4}]},
+{"id":10,"date":"Jul 3","venue":"Kansas City","a":"Colombia","af":"🇨🇴","asum":"Won Group K · +3 GD","b":"Croatia","bf":"🇭🇷","bsum":"3rd Group L · -1 GD","xgA":1.55,"xgB":1.38,"pA":41.6,"pD":24.5,"pB":33.8,"advA":55.1,"advB":44.9,"over25":56.1,"btts":58.9,"scores":[{"s":"1-1","p":11.4},{"s":"2-1","p":8.9},{"s":"1-0","p":8.3},{"s":"1-2","p":7.9}]},
+{"id":11,"date":"Jul 3","venue":"Arlington","a":"Spain","af":"🇪🇸","asum":"Won Group H · +5 GD","b":"Austria","bf":"🇦🇹","bsum":"2nd Group J · 0 GD","xgA":2.23,"xgB":0.94,"pA":66.4,"pD":18.9,"pB":14.7,"advA":76.8,"advB":23.2,"over25":61.4,"btts":54.5,"scores":[{"s":"2-0","p":10.4},{"s":"2-1","p":9.8},{"s":"1-0","p":9.3},{"s":"1-1","p":8.8}]},
+{"id":12,"date":"Jul 4","venue":"San Francisco","a":"Switzerland","af":"🇨🇭","asum":"Won Group B · +4 GD","b":"Algeria","bf":"🇩🇿","bsum":"3rd Group J · -2 GD","xgA":1.49,"xgB":1.15,"pA":44.9,"pD":25.8,"pB":29.3,"advA":59.1,"advB":40.9,"over25":49.0,"btts":52.8,"scores":[{"s":"1-1","p":12.3},{"s":"1-0","p":10.7},{"s":"2-1","p":9.1},{"s":"0-1","p":8.3}]},
+{"id":13,"date":"Jul 4","venue":"Atlanta","a":"Argentina","af":"🇦🇷","asum":"Won Group J · +5 GD","b":"Cape Verde","bf":"🇨🇻","bsum":"2nd Group H · 0 GD","xgA":2.23,"xgB":0.81,"pA":69.6,"pD":18.2,"pB":12.2,"advA":79.6,"advB":20.4,"over25":58.5,"btts":49.5,"scores":[{"s":"2-0","p":11.9},{"s":"1-0","p":10.7},{"s":"2-1","p":9.6},{"s":"3-0","p":8.8}]},
+{"id":14,"date":"Jul 5","venue":"Toronto","a":"Australia","af":"🇦🇺","asum":"2nd Group D · 0 GD","b":"Egypt","bf":"🇪🇬","bsum":"2nd Group G · +2 GD","xgA":1.18,"xgB":1.42,"pA":31.4,"pD":26.2,"pB":42.5,"advA":43.1,"advB":56.9,"over25":48.1,"btts":52.5,"scores":[{"s":"1-1","p":12.5},{"s":"0-1","p":10.6},{"s":"1-2","p":8.8},{"s":"1-0","p":8.8}]},
+{"id":15,"date":"Jul 5","venue":"New York","a":"Portugal","af":"🇵🇹","asum":"2nd Group K · +5 GD","b":"Ghana","bf":"🇬🇭","bsum":"2nd Group L · +1 GD","xgA":2.03,"xgB":1.08,"pA":59.2,"pD":21.1,"pB":19.6,"advA":70.8,"advB":29.2,"over25":60.0,"btts":57.3,"scores":[{"s":"2-1","p":9.9},{"s":"1-1","p":9.8},{"s":"2-0","p":9.2},{"s":"1-0","p":9.1}]}];
+
+let BANK = +(localStorage.getItem('pp_bank')||50);
+let POS = JSON.parse(localStorage.getItem('pp_pos')||'[]');
+let sel = null;          // selected market {label, sub, prob}
+const $ = s=>document.querySelector(s);
+
+function save(){localStorage.setItem('pp_bank',BANK); localStorage.setItem('pp_pos',JSON.stringify(POS));}
+function money(n){return '$'+(Math.round(n*100)/100).toFixed(2);}
+function money0(n){return '$'+Math.round(n);}
+
+function totals(){
+  let stake=0, pay=0, evVal=0;
+  POS.forEach(p=>{ const c=p.stake*100/p.price; stake+=p.stake; pay+=c; evVal+=c*(p.winprob/100); });
+  const cash=BANK-stake;
+  const value=cash+evVal;           // model-expected portfolio value
+  const edge=evVal-stake;           // model EV above cost of open positions
+  return {stake,pay,evVal,cash,value,edge};
+}
+function renderStrip(){
+  const t=totals();
+  $('#sCash').textContent=money0(t.cash);
+  $('#sStake').textContent=money0(t.stake);
+  $('#sPay').textContent=money0(t.pay);
+  $('#sEdge').textContent=(t.edge>=0?'+':'')+money0(t.edge);
+  const a=$('#pvAmt'); a.textContent=money(t.value);
+  a.classList.toggle('dn', t.value<BANK);
+}
+function setBankroll(){
+  const v=prompt('Set your starting bankroll ($):', BANK);
+  if(v!==null && !isNaN(+v) && +v>0){ BANK=+v; save(); renderStrip(); }
+}
+
+/* ---------- FLAGS GRID ---------- */
+function flagsGrid(){
+  const teams=[];
+  DATA.forEach(m=>{teams.push([m.a,m.af,m.id]); teams.push([m.b,m.bf,m.id]);});
+  let h=`<div class="sech"><span>Teams in the Round of 32</span><span style="color:var(--mut2)">32 nations</span></div><div class="flags">`;
+  teams.forEach(([nm,fl,id])=>{ h+=`<div class="flg" onclick="detail(${id})">${fl}<span class="tip">${nm}</span></div>`; });
+  h+=`</div>`;
+  return h;
+}
+
+/* ---------- TOURNAMENT GROWTH PROJECTION ---------- */
+function growthCard(){
+  return `<div class="grow">
+    <div class="hd"><div class="t">Projected bankroll · full knockout run</div><div class="v" id="gFinal">—</div></div>
+    <canvas id="gCanvas" width="420" height="70"></canvas>
+    <div class="slab"><span>Edge</span><input type="range" id="gEdge" min="1" max="8" step="1" value="3" oninput="simGrowth()"><span id="gEdgeV" style="width:30px">3%</span></div>
+    <div class="slab"><span>Bets</span><input type="range" id="gBets" min="5" max="40" step="1" value="24" oninput="simGrowth()"><span id="gBetsV" style="width:30px">24</span></div>
+    <div class="disc" style="margin-top:8px">Compounding ¼-Kelly on small positive edges. This is the <b>expected</b> path — real results swing well above and below it. Edge only exists if your model price beats the market price.</div>
+  </div>`;
+}
+function simGrowth(){
+  const edge=+document.getElementById('gEdge').value/100;
+  const nb=+document.getElementById('gBets').value;
+  document.getElementById('gEdgeV').textContent=(edge*100).toFixed(0)+'%';
+  document.getElementById('gBetsV').textContent=nb;
+  // avg even-ish market: price ~50c, b=1. quarter-Kelly fraction f = 0.25 * edge/b
+  const b=1, f=Math.min(0.06, 0.25*edge/b);
+  // expected log-growth per bet at fair-ish odds with edge: approx g = f*edge
+  const gPer=f*edge*4 + edge*f; // modest expected geometric step
+  let v=totals().value, pts=[v];
+  for(let i=0;i<nb;i++){ v=v*(1+ f*edge*2.2 ); pts.push(v); }
+  const cv=document.getElementById('gCanvas'); if(!cv) return;
+  const ctx=cv.getContext('2d'), W=cv.width, H=cv.height;
+  ctx.clearRect(0,0,W,H);
+  const mn=Math.min(...pts), mx=Math.max(...pts);
+  const x=i=>i/(pts.length-1)*(W-6)+3, y=val=>H-4-((val-mn)/((mx-mn)||1))*(H-10);
+  ctx.beginPath(); ctx.moveTo(x(0),y(pts[0]));
+  pts.forEach((p,i)=>ctx.lineTo(x(i),y(p)));
+  ctx.strokeStyle='#00c187'; ctx.lineWidth=2; ctx.stroke();
+  ctx.lineTo(x(pts.length-1),H); ctx.lineTo(x(0),H); ctx.closePath();
+  ctx.fillStyle='rgba(0,193,135,.10)'; ctx.fill();
+  const fin=pts[pts.length-1], pct=Math.round((fin/pts[0]-1)*100);
+  document.getElementById('gFinal').textContent=money(fin)+'  (+'+pct+'%)';
+}
+
+/* ---------- LIST VIEW ---------- */
+function listView(){
+  sel=null;
+  let h=flagsGrid()+growthCard();
+  h+=`<div class="sech"><span>World Cup 2026 · Round of 32</span><span style="color:var(--mut2)">16 matches</span></div>`;
+  DATA.forEach(m=>{
+    const aFav=m.advA>=m.advB;
+    const fav=aFav?m.a:m.b, favP=aFav?m.advA:m.advB, favFl=aFav?m.af:m.bf;
+    h+=`<div class="mrow fade" onclick="detail(${m.id})">
+      <span class="fl">${m.af}</span>
+      <div class="nm"><div class="t">${m.a} <span style="color:var(--mut2)">v</span> ${m.b}</div>
+        <div class="d">${m.date} · ${m.venue}</div></div>
+      <span class="fl">${m.bf}</span>
+      <div class="fav"><div class="p">${Math.round(favP)}%</div><div class="who">${favFl} advance</div></div>
+      <span class="arrow">›</span></div>`;
+  });
+  h+=portfolioBlock();
+  h+=`<div class="foot">PitchPredict · opponent-adjusted Poisson model · calibrated from 2026 group-stage form + strength priors. Probabilities, not guarantees. For entertainment — not financial advice.</div>`;
+  $('#view').innerHTML=h;
+  renderStrip();
+  simGrowth();
+}
+
+/* ---------- DETAIL VIEW ---------- */
+function detail(id){
+  const m=DATA[id];
+  sel={label:`${m.a} to advance`, sub:`${m.a} vs ${m.b} · ${m.date}`, prob:m.advA, key:`adv${id}A`};
+  const mk = (label,sub,prob,key)=>`<div class="mkt" onclick='pick(${JSON.stringify(label)},${JSON.stringify(sub)},${prob},"${key}")'>
+      <div><div class="nm">${label}</div><div class="su">${sub}</div></div>
+      <div class="pill" id="pill_${key}">${Math.round(prob)}¢</div></div>`;
+  let h=`<div class="sech"><span class="back" onclick="listView()">‹ All matches</span><span>${m.date} · ${m.venue}</span></div>
+  <div class="ev fade">
+    <div class="teams">
+      <div class="tm"><span class="fl">${m.af}</span><span class="nm">${m.a}</span><span class="su">${m.asum}</span><span class="adv" style="color:var(--yes)">${Math.round(m.advA)}%</span></div>
+      <div class="midv">advance<br>›  ‹</div>
+      <div class="tm"><span class="fl">${m.bf}</span><span class="nm">${m.b}</span><span class="su">${m.bsum}</span><span class="adv">${Math.round(m.advB)}%</span></div>
+    </div>
+    <div class="meta">Winner advances to Round of 16 · advancement includes extra time &amp; penalties</div>
+  </div>
+
+  <div class="card fade">
+    <div class="ctitle">Result in 90 minutes</div>
+    <div class="br"><div class="lab"><span>${m.af} ${m.a} win</span><b>${m.pA}%</b></div><div class="track"><i class="fillY" data-w="${m.pA}"></i></div></div>
+    <div class="br"><div class="lab"><span>Draw <span style="color:var(--mut2)">(high draw risk)</span></span><b>${m.pD}%</b></div><div class="track"><i class="fillD" data-w="${m.pD}"></i></div></div>
+    <div class="br"><div class="lab"><span>${m.bf} ${m.b} win</span><b>${m.pB}%</b></div><div class="track"><i class="fillN" data-w="${m.pB}"></i></div></div>
+    <div class="xg" style="margin-top:12px">
+      <div class="xgc"><div class="k">${m.a} expected goals</div><div class="v" style="color:var(--yes)">${m.xgA}</div></div>
+      <div class="xgc"><div class="k">${m.b} expected goals</div><div class="v">${m.xgB}</div></div>
+    </div>
+  </div>
+
+  <div class="card fade">
+    <div class="ctitle">Most likely scorelines</div>
+    ${m.scores.map(s=>`<div class="sl"><span>${m.a} ${s.s.replace('-',' – ')} ${m.b}</span><span class="pc">${s.p}%</span></div>`).join('')}
+  </div>
+
+  <div class="card fade">
+    <div class="ctitle">Markets · tap to load ticket</div>
+    ${mk(m.a+' to advance', 'incl. ET / penalties', m.advA, `adv${id}A`)}
+    ${mk(m.b+' to advance', 'incl. ET / penalties', m.advB, `adv${id}B`)}
+    ${mk('Over 2.5 goals', 'combined xG '+(Math.round((m.xgA+m.xgB)*100)/100), m.over25, `ov${id}`)}
+    ${mk('Both teams to score', 'BTTS yes', m.btts, `bt${id}`)}
+  </div>
+
+  <div id="ticket"></div>`;
+  h+=portfolioBlock();
+  $('#view').innerHTML=h;
+  // animate bars
+  requestAnimationFrame(()=>document.querySelectorAll('.track > i').forEach(i=>i.style.width=i.dataset.w+'%'));
+  renderTicket(); renderStrip();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function pick(label,sub,prob,key){
+  sel={label,sub,prob,key};
+  document.querySelectorAll('.pill').forEach(p=>p.classList.remove('sel'));
+  const el=document.getElementById('pill_'+key); if(el) el.classList.add('sel');
+  renderTicket();
+  document.getElementById('ticket').scrollIntoView({behavior:'smooth',block:'center'});
+}
+
+/* ---------- TICKET / CALCULATOR ---------- */
+function renderTicket(){
+  if(!sel) return;
+  const stake=+(window._stake||10), price=+(window._price||Math.round(sel.prob));
+  const c=stake*100/price;           // contracts (each pays $1)
+  const payout=c*1;                  // total back if win
+  const profit=payout-stake;
+  const wp=sel.prob/100;
+  const ev=wp*profit-(1-wp)*stake;   // model expected value of the bet
+  const edge=sel.prob-price;         // model% minus price paid (¢)
+  const mult=100/price;              // payout multiplier ($1 -> $mult)
+  const rec=recommend(wp, price);    // {stake, action}
+  const t=`<div class="ticket fade">
+    <div class="selname">${sel.label}</div>
+    <div class="selsub">${sel.sub} · model chance ${Math.round(sel.prob)}%</div>
+    <div class="inrow">
+      <div class="inq"><label>YOUR STAKE</label><div class="ib"><span>$</span><input id="stk" type="number" min="1" value="${stake}" oninput="_stake=this.value;upd()"></div></div>
+      <div class="inq"><label>ENTRY PRICE (¢)</label><div class="ib"><input id="prc" type="number" min="1" max="99" value="${price}" oninput="_price=this.value;upd()"><span>¢</span></div></div>
+    </div>
+    <div class="chips">
+      ${[5,10,25,50].map(v=>`<div class="chip" onclick="_stake=${v};document.getElementById('stk').value=${v};upd()">$${v}</div>`).join('')}
+    </div>
+    <div class="res">
+      <div class="big2"><span class="k">Payout multiplier</span><span class="v" id="rMult">${mult.toFixed(2)}×</span></div>
+      <div class="tkrow"><span class="k">If it hits, you collect</span><span class="v" id="rPay">${money(payout)}</span></div>
+      <div class="tkrow"><span class="k">Profit if win</span><span class="v" style="color:var(--yes)" id="rProf">+${money(profit)}</span></div>
+      <div class="tkrow"><span class="k">Model win chance</span><span class="v" id="rWp">${Math.round(sel.prob)}%</span></div>
+      <div class="tkrow"><span class="k">Edge vs entry price</span><span class="edge ${edge>=0?'pos':'neg'}" id="rEdge">${edge>=0?'+':''}${edge.toFixed(0)}¢</span></div>
+      <div class="tkrow"><span class="k">Expected value (model)</span><span class="v" id="rEv" style="color:${ev>=0?'var(--yes)':'var(--no)'}">${ev>=0?'+':''}${money(ev)}</span></div>
+    </div>
+    <div class="rec ${rec.buy?'':'skip'}" id="recBox">
+      <span class="ic">${rec.buy?'✅':'⏸'}</span>
+      <span class="tx" id="recTx">${rec.txt}</span>
+    </div>
+    <button class="addbtn" id="addb" onclick="addPos()">Add to portfolio</button>
+  </div>`;
+  document.getElementById('ticket').innerHTML=t;
+}
+/* ¼-Kelly recommended trade. q=model win prob (0-1), price in cents. */
+function recommend(q, price){
+  const p=price/100, b=(1/p)-1;                 // net odds per $1
+  const kelly=(b*q-(1-p>0?(1-q):(1-q)))/b;      // = (q*b-(1-q))/b
+  const f=Math.max(0, 0.25*kelly);              // quarter-Kelly fraction of bankroll
+  const cash=Math.max(0, totals().cash);
+  const rs=Math.min(cash, f*cash);
+  if(price>=sel.prob || rs<1){
+    return {buy:false, stake:0, txt:`<b>Recommendation: skip / wait.</b> No edge at ${price}¢ — the market price is at or above the model's ${Math.round(sel.prob)}%. Only buy if Kalshi quotes it cheaper.`};
+  }
+  return {buy:true, stake:rs, txt:`<b>Recommendation: BUY ~${money(rs)}.</b> ¼-Kelly on a +${(sel.prob-price).toFixed(0)}¢ edge (${(f*100).toFixed(1)}% of cash). Tap a stake chip to size it.`};
+}
+function upd(){
+  if(!sel) return;
+  const stake=+(window._stake||10), price=Math.max(1,Math.min(99,+(window._price||Math.round(sel.prob))));
+  const c=stake*100/price, payout=c, profit=payout-stake, wp=sel.prob/100;
+  const ev=wp*profit-(1-wp)*stake, edge=sel.prob-price, mult=100/price;
+  $('#rMult').textContent=mult.toFixed(2)+'×';
+  $('#rPay').textContent=money(payout);
+  $('#rProf').textContent='+'+money(profit);
+  const e=$('#rEdge'); e.textContent=(edge>=0?'+':'')+edge.toFixed(0)+'¢'; e.className='edge '+(edge>=0?'pos':'neg');
+  const v=$('#rEv'); v.textContent=(ev>=0?'+':'')+money(ev); v.style.color=ev>=0?'var(--yes)':'var(--no)';
+  const rec=recommend(wp, price);
+  const box=$('#recBox'), tx=$('#recTx');
+  if(box){ box.className='rec '+(rec.buy?'':'skip'); box.querySelector('.ic').textContent=rec.buy?'✅':'⏸'; tx.innerHTML=rec.txt; }
+}
+function addPos(){
+  if(!sel) return;
+  const stake=+(window._stake||10), price=Math.max(1,Math.min(99,+(window._price||Math.round(sel.prob))));
+  POS.push({label:sel.label, sub:sel.sub, stake, price, winprob:sel.prob});
+  save();
+  const b=$('#addb'); b.textContent='✓ Added'; b.classList.add('flash');
+  setTimeout(()=>{b.textContent='Add to portfolio'; b.classList.remove('flash');},900);
+  // refresh portfolio + strip in place
+  const pb=document.getElementById('pfBlock'); if(pb) pb.outerHTML=portfolioBlock();
+  renderStrip();
+}
+function removePos(i){ POS.splice(i,1); save(); const pb=document.getElementById('pfBlock'); if(pb) pb.outerHTML=portfolioBlock(); renderStrip(); }
+function clearPos(){ if(confirm('Clear all positions?')){POS=[]; save(); const pb=document.getElementById('pfBlock'); if(pb) pb.outerHTML=portfolioBlock(); renderStrip();} }
+
+function portfolioBlock(){
+  const t=totals();
+  let h=`<div id="pfBlock"><div class="sech" style="margin-top:18px"><span>My portfolio</span>${POS.length?`<span class="back" onclick="clearPos()">clear</span>`:''}</div>`;
+  if(!POS.length){ h+=`<div class="empty">No positions yet. Pick a match, choose a market, set a stake, and tap “Add to portfolio.”</div>`; }
+  else{
+    POS.forEach((p,i)=>{ const c=p.stake*100/p.price; const ev=c*(p.winprob/100)-p.stake;
+      h+=`<div class="pos"><div class="l"><div class="t">${p.label}</div><div class="s">${money(p.stake)} @ ${p.price}¢ · win ${Math.round(p.winprob)}%</div></div>
+      <div class="r"><div class="pay">${money(c)}</div><div class="ev">EV ${ev>=0?'+':''}${money(ev)}</div></div>
+      <span class="rm" onclick="removePos(${i})">✕</span></div>`; });
+    h+=`<div class="pos" style="background:var(--panel2)"><div class="l"><div class="t">Totals</div><div class="s">${POS.length} open · cash ${money(t.cash)}</div></div>
+      <div class="r"><div class="pay">${money(t.pay)}</div><div class="ev">model edge ${t.edge>=0?'+':''}${money(t.edge)}</div></div><span style="width:16px"></span></div>`;
+  }
+  h+=`<div class="disc"><b>How to read this:</b> entry price is what you'd pay per contract on Kalshi (in cents = implied %). Edge is the model's % minus that price — positive edge means the model thinks the market is too cheap. Expected value weights profit by the model's win chance. These are model outputs for tracking only, <b>not financial advice</b>, and a 75% pick still loses ~1 in 4. Never stake money you can't lose; check that prediction markets are legal where you are.</div></div>`;
+  return h;
+}
+
+listView();
+</script>
+</body>
+</html>

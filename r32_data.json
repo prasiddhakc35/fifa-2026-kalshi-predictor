@@ -1,0 +1,610 @@
+[
+ {
+  "id": 0,
+  "date": "Jun 28",
+  "venue": "Los Angeles",
+  "a": "South Africa",
+  "af": "\ud83c\uddff\ud83c\udde6",
+  "asum": "2nd Group A \u00b7 -1 GD",
+  "b": "Canada",
+  "bf": "\ud83c\udde8\ud83c\udde6",
+  "bsum": "2nd Group B \u00b7 +5 GD",
+  "xgA": 0.93,
+  "xgB": 1.81,
+  "pA": 19.1,
+  "pD": 22.9,
+  "pB": 58.1,
+  "advA": 29.3,
+  "advB": 70.7,
+  "over25": 51.6,
+  "btts": 50.6,
+  "scores": [
+   {
+    "s": "0-1",
+    "p": 11.7
+   },
+   {
+    "s": "1-1",
+    "p": 10.9
+   },
+   {
+    "s": "0-2",
+    "p": 10.6
+   },
+   {
+    "s": "1-2",
+    "p": 9.8
+   }
+  ]
+ },
+ {
+  "id": 1,
+  "date": "Jun 29",
+  "venue": "Houston",
+  "a": "Brazil",
+  "af": "\ud83c\udde7\ud83c\uddf7",
+  "asum": "Won Group C \u00b7 +6 GD",
+  "b": "Japan",
+  "bf": "\ud83c\uddef\ud83c\uddf5",
+  "bsum": "2nd Group F \u00b7 +4 GD",
+  "xgA": 2.09,
+  "xgB": 1.0,
+  "pA": 62.3,
+  "pD": 20.4,
+  "pB": 17.3,
+  "advA": 73.5,
+  "advB": 26.5,
+  "over25": 59.7,
+  "btts": 55.5,
+  "scores": [
+   {
+    "s": "2-1",
+    "p": 9.9
+   },
+   {
+    "s": "2-0",
+    "p": 9.9
+   },
+   {
+    "s": "1-1",
+    "p": 9.5
+   },
+   {
+    "s": "1-0",
+    "p": 9.5
+   }
+  ]
+ },
+ {
+  "id": 2,
+  "date": "Jun 29",
+  "venue": "Philadelphia",
+  "a": "Germany",
+  "af": "\ud83c\udde9\ud83c\uddea",
+  "asum": "Won Group E \u00b7 +6 GD",
+  "b": "Paraguay",
+  "bf": "\ud83c\uddf5\ud83c\uddfe",
+  "bsum": "3rd Group D \u00b7 -2 GD",
+  "xgA": 2.04,
+  "xgB": 0.95,
+  "pA": 62.6,
+  "pD": 20.7,
+  "pB": 16.8,
+  "advA": 73.9,
+  "advB": 26.1,
+  "over25": 57.3,
+  "btts": 53.2,
+  "scores": [
+   {
+    "s": "2-0",
+    "p": 10.5
+   },
+   {
+    "s": "1-0",
+    "p": 10.3
+   },
+   {
+    "s": "2-1",
+    "p": 9.9
+   },
+   {
+    "s": "1-1",
+    "p": 9.8
+   }
+  ]
+ },
+ {
+  "id": 3,
+  "date": "Jun 30",
+  "venue": "Boston",
+  "a": "Netherlands",
+  "af": "\ud83c\uddf3\ud83c\uddf1",
+  "asum": "Won Group F \u00b7 +6 GD",
+  "b": "Morocco",
+  "bf": "\ud83c\uddf2\ud83c\udde6",
+  "bsum": "2nd Group C \u00b7 +3 GD",
+  "xgA": 1.61,
+  "xgB": 1.32,
+  "pA": 44.2,
+  "pD": 24.4,
+  "pB": 31.4,
+  "advA": 57.6,
+  "advB": 42.4,
+  "over25": 55.9,
+  "btts": 58.5,
+  "scores": [
+   {
+    "s": "1-1",
+    "p": 11.4
+   },
+   {
+    "s": "2-1",
+    "p": 9.1
+   },
+   {
+    "s": "1-0",
+    "p": 8.6
+   },
+   {
+    "s": "1-2",
+    "p": 7.5
+   }
+  ]
+ },
+ {
+  "id": 4,
+  "date": "Jun 30",
+  "venue": "Atlanta",
+  "a": "France",
+  "af": "\ud83c\uddeb\ud83c\uddf7",
+  "asum": "Won Group I \u00b7 +8 GD",
+  "b": "Sweden",
+  "bf": "\ud83c\uddf8\ud83c\uddea",
+  "bsum": "3rd Group F \u00b7 0 GD",
+  "xgA": 2.16,
+  "xgB": 0.97,
+  "pA": 64.5,
+  "pD": 19.6,
+  "pB": 15.9,
+  "advA": 75.3,
+  "advB": 24.7,
+  "over25": 60.6,
+  "btts": 55.0,
+  "scores": [
+   {
+    "s": "2-0",
+    "p": 10.2
+   },
+   {
+    "s": "2-1",
+    "p": 9.9
+   },
+   {
+    "s": "1-0",
+    "p": 9.4
+   },
+   {
+    "s": "1-1",
+    "p": 9.2
+   }
+  ]
+ },
+ {
+  "id": 5,
+  "date": "Jul 1",
+  "venue": "Seattle",
+  "a": "Ivory Coast",
+  "af": "\ud83c\udde8\ud83c\uddee",
+  "asum": "2nd Group E \u00b7 +2 GD",
+  "b": "Norway",
+  "bf": "\ud83c\uddf3\ud83c\uddf4",
+  "bsum": "2nd Group I \u00b7 +1 GD",
+  "xgA": 1.35,
+  "xgB": 1.67,
+  "pA": 31.0,
+  "pD": 23.9,
+  "pB": 45.1,
+  "advA": 41.8,
+  "advB": 58.2,
+  "over25": 58.0,
+  "btts": 60.0,
+  "scores": [
+   {
+    "s": "1-1",
+    "p": 11.0
+   },
+   {
+    "s": "1-2",
+    "p": 9.2
+   },
+   {
+    "s": "0-1",
+    "p": 8.2
+   },
+   {
+    "s": "2-1",
+    "p": 7.4
+   }
+  ]
+ },
+ {
+  "id": 6,
+  "date": "Jul 1",
+  "venue": "Mexico City",
+  "a": "Mexico",
+  "af": "\ud83c\uddf2\ud83c\uddfd",
+  "asum": "Won Group A \u00b7 +6 GD",
+  "b": "Ecuador",
+  "bf": "\ud83c\uddea\ud83c\udde8",
+  "bsum": "3rd Group E \u00b7 0 GD",
+  "xgA": 1.55,
+  "xgB": 1.08,
+  "pA": 48.3,
+  "pD": 25.3,
+  "pB": 26.4,
+  "advA": 62.2,
+  "advB": 37.8,
+  "over25": 49.0,
+  "btts": 52.1,
+  "scores": [
+   {
+    "s": "1-1",
+    "p": 12.0
+   },
+   {
+    "s": "1-0",
+    "p": 11.2
+   },
+   {
+    "s": "2-1",
+    "p": 9.4
+   },
+   {
+    "s": "2-0",
+    "p": 8.7
+   }
+  ]
+ },
+ {
+  "id": 7,
+  "date": "Jul 1",
+  "venue": "Santa Clara",
+  "a": "USA",
+  "af": "\ud83c\uddfa\ud83c\uddf8",
+  "asum": "Won Group D \u00b7 +4 GD",
+  "b": "Bosnia",
+  "bf": "\ud83c\udde7\ud83c\udde6",
+  "bsum": "3rd Group B \u00b7 -1 GD",
+  "xgA": 1.91,
+  "xgB": 1.09,
+  "pA": 56.6,
+  "pD": 22.1,
+  "pB": 21.3,
+  "advA": 68.7,
+  "advB": 31.3,
+  "over25": 57.8,
+  "btts": 56.6,
+  "scores": [
+   {
+    "s": "1-1",
+    "p": 10.3
+   },
+   {
+    "s": "2-1",
+    "p": 9.9
+   },
+   {
+    "s": "1-0",
+    "p": 9.5
+   },
+   {
+    "s": "2-0",
+    "p": 9.1
+   }
+  ]
+ },
+ {
+  "id": 8,
+  "date": "Jul 2",
+  "venue": "Dallas",
+  "a": "Belgium",
+  "af": "\ud83c\udde7\ud83c\uddea",
+  "asum": "Won Group G \u00b7 +3 GD",
+  "b": "Senegal",
+  "bf": "\ud83c\uddf8\ud83c\uddf3",
+  "bsum": "3rd Group I \u00b7 qualified",
+  "xgA": 1.79,
+  "xgB": 1.36,
+  "pA": 47.5,
+  "pD": 23.1,
+  "pB": 29.4,
+  "advA": 60.2,
+  "advB": 39.8,
+  "over25": 60.9,
+  "btts": 61.9,
+  "scores": [
+   {
+    "s": "1-1",
+    "p": 10.4
+   },
+   {
+    "s": "2-1",
+    "p": 9.3
+   },
+   {
+    "s": "1-0",
+    "p": 7.7
+   },
+   {
+    "s": "1-2",
+    "p": 7.1
+   }
+  ]
+ },
+ {
+  "id": 9,
+  "date": "Jul 2",
+  "venue": "Miami",
+  "a": "England",
+  "af": "\ud83c\udff4",
+  "asum": "Won Group L \u00b7 +2 GD",
+  "b": "DR Congo",
+  "bf": "\ud83c\udde8\ud83c\udde9",
+  "bsum": "3rd Group K \u00b7 -1 GD",
+  "xgA": 2.06,
+  "xgB": 1.03,
+  "pA": 61.1,
+  "pD": 20.7,
+  "pB": 18.1,
+  "advA": 72.5,
+  "advB": 27.5,
+  "over25": 59.5,
+  "btts": 55.9,
+  "scores": [
+   {
+    "s": "2-1",
+    "p": 9.9
+   },
+   {
+    "s": "2-0",
+    "p": 9.7
+   },
+   {
+    "s": "1-1",
+    "p": 9.7
+   },
+   {
+    "s": "1-0",
+    "p": 9.4
+   }
+  ]
+ },
+ {
+  "id": 10,
+  "date": "Jul 3",
+  "venue": "Kansas City",
+  "a": "Colombia",
+  "af": "\ud83c\udde8\ud83c\uddf4",
+  "asum": "Won Group K \u00b7 +3 GD",
+  "b": "Croatia",
+  "bf": "\ud83c\udded\ud83c\uddf7",
+  "bsum": "3rd Group L \u00b7 -1 GD",
+  "xgA": 1.55,
+  "xgB": 1.38,
+  "pA": 41.6,
+  "pD": 24.5,
+  "pB": 33.8,
+  "advA": 55.1,
+  "advB": 44.9,
+  "over25": 56.1,
+  "btts": 58.9,
+  "scores": [
+   {
+    "s": "1-1",
+    "p": 11.4
+   },
+   {
+    "s": "2-1",
+    "p": 8.9
+   },
+   {
+    "s": "1-0",
+    "p": 8.3
+   },
+   {
+    "s": "1-2",
+    "p": 7.9
+   }
+  ]
+ },
+ {
+  "id": 11,
+  "date": "Jul 3",
+  "venue": "Arlington",
+  "a": "Spain",
+  "af": "\ud83c\uddea\ud83c\uddf8",
+  "asum": "Won Group H \u00b7 +5 GD",
+  "b": "Austria",
+  "bf": "\ud83c\udde6\ud83c\uddf9",
+  "bsum": "2nd Group J \u00b7 0 GD",
+  "xgA": 2.23,
+  "xgB": 0.94,
+  "pA": 66.4,
+  "pD": 18.9,
+  "pB": 14.7,
+  "advA": 76.8,
+  "advB": 23.2,
+  "over25": 61.4,
+  "btts": 54.5,
+  "scores": [
+   {
+    "s": "2-0",
+    "p": 10.4
+   },
+   {
+    "s": "2-1",
+    "p": 9.8
+   },
+   {
+    "s": "1-0",
+    "p": 9.3
+   },
+   {
+    "s": "1-1",
+    "p": 8.8
+   }
+  ]
+ },
+ {
+  "id": 12,
+  "date": "Jul 4",
+  "venue": "San Francisco",
+  "a": "Switzerland",
+  "af": "\ud83c\udde8\ud83c\udded",
+  "asum": "Won Group B \u00b7 +4 GD",
+  "b": "Algeria",
+  "bf": "\ud83c\udde9\ud83c\uddff",
+  "bsum": "3rd Group J \u00b7 -2 GD",
+  "xgA": 1.49,
+  "xgB": 1.15,
+  "pA": 44.9,
+  "pD": 25.8,
+  "pB": 29.3,
+  "advA": 59.1,
+  "advB": 40.9,
+  "over25": 49.0,
+  "btts": 52.8,
+  "scores": [
+   {
+    "s": "1-1",
+    "p": 12.3
+   },
+   {
+    "s": "1-0",
+    "p": 10.7
+   },
+   {
+    "s": "2-1",
+    "p": 9.1
+   },
+   {
+    "s": "0-1",
+    "p": 8.3
+   }
+  ]
+ },
+ {
+  "id": 13,
+  "date": "Jul 4",
+  "venue": "Atlanta",
+  "a": "Argentina",
+  "af": "\ud83c\udde6\ud83c\uddf7",
+  "asum": "Won Group J \u00b7 +5 GD",
+  "b": "Cape Verde",
+  "bf": "\ud83c\udde8\ud83c\uddfb",
+  "bsum": "2nd Group H \u00b7 0 GD",
+  "xgA": 2.23,
+  "xgB": 0.81,
+  "pA": 69.6,
+  "pD": 18.2,
+  "pB": 12.2,
+  "advA": 79.6,
+  "advB": 20.4,
+  "over25": 58.5,
+  "btts": 49.5,
+  "scores": [
+   {
+    "s": "2-0",
+    "p": 11.9
+   },
+   {
+    "s": "1-0",
+    "p": 10.7
+   },
+   {
+    "s": "2-1",
+    "p": 9.6
+   },
+   {
+    "s": "3-0",
+    "p": 8.8
+   }
+  ]
+ },
+ {
+  "id": 14,
+  "date": "Jul 5",
+  "venue": "Toronto",
+  "a": "Australia",
+  "af": "\ud83c\udde6\ud83c\uddfa",
+  "asum": "2nd Group D \u00b7 0 GD",
+  "b": "Egypt",
+  "bf": "\ud83c\uddea\ud83c\uddec",
+  "bsum": "2nd Group G \u00b7 +2 GD",
+  "xgA": 1.18,
+  "xgB": 1.42,
+  "pA": 31.4,
+  "pD": 26.2,
+  "pB": 42.5,
+  "advA": 43.1,
+  "advB": 56.9,
+  "over25": 48.1,
+  "btts": 52.5,
+  "scores": [
+   {
+    "s": "1-1",
+    "p": 12.5
+   },
+   {
+    "s": "0-1",
+    "p": 10.6
+   },
+   {
+    "s": "1-2",
+    "p": 8.8
+   },
+   {
+    "s": "1-0",
+    "p": 8.8
+   }
+  ]
+ },
+ {
+  "id": 15,
+  "date": "Jul 5",
+  "venue": "New York",
+  "a": "Portugal",
+  "af": "\ud83c\uddf5\ud83c\uddf9",
+  "asum": "2nd Group K \u00b7 +5 GD",
+  "b": "Ghana",
+  "bf": "\ud83c\uddec\ud83c\udded",
+  "bsum": "2nd Group L \u00b7 +1 GD",
+  "xgA": 2.03,
+  "xgB": 1.08,
+  "pA": 59.2,
+  "pD": 21.1,
+  "pB": 19.6,
+  "advA": 70.8,
+  "advB": 29.2,
+  "over25": 60.0,
+  "btts": 57.3,
+  "scores": [
+   {
+    "s": "2-1",
+    "p": 9.9
+   },
+   {
+    "s": "1-1",
+    "p": 9.8
+   },
+   {
+    "s": "2-0",
+    "p": 9.2
+   },
+   {
+    "s": "1-0",
+    "p": 9.1
+   }
+  ]
+ }
+]

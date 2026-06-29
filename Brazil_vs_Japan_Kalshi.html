@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>PitchPredict · Brazil vs Japan · Kalshi-style market</title>
+<style>
+  :root{
+    --bg:#0b0e11; --panel:#12171c; --panel2:#171d24; --line:#222b33;
+    --txt:#eef2f5; --mut:#8a97a3; --mut2:#5f6b75;
+    --yes:#00c187; --yes-bg:rgba(0,193,135,.12); --yes-bd:rgba(0,193,135,.35);
+    --no:#f0476a; --no-bg:rgba(240,71,106,.10); --no-bd:rgba(240,71,106,.32);
+    --mint:#1ce7ac;
+  }
+  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent}
+  body{margin:0; background:#05070a; color:var(--txt);
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,Roboto,Helvetica,Arial,sans-serif;
+    display:flex; justify-content:center; padding:24px 12px}
+  .phone{width:412px; max-width:100%; background:var(--bg); border-radius:30px;
+    border:1px solid #1b2228; overflow:hidden; box-shadow:0 30px 80px rgba(0,0,0,.6)}
+  .topbar{display:flex; align-items:center; justify-content:space-between;
+    padding:16px 18px 12px}
+  .brand{display:flex; align-items:center; gap:8px; font-weight:800; letter-spacing:-.3px; font-size:18px}
+  .brand .dot{width:22px; height:22px; border-radius:6px; background:var(--mint);
+    display:flex; align-items:center; justify-content:center; color:#04201a; font-size:13px; font-weight:900}
+  .bal{background:var(--panel2); border:1px solid var(--line); border-radius:999px;
+    padding:7px 13px; font-size:13px; font-weight:700; color:var(--mint)}
+  .scroll{max-height:none; padding:4px 14px 22px}
+  .crumb{font-size:11px; color:var(--mut2); text-transform:uppercase; letter-spacing:.6px; margin:6px 4px 10px}
+
+  .event{background:var(--panel); border:1px solid var(--line); border-radius:18px; padding:16px 16px 14px; margin-bottom:14px}
+  .teams{display:flex; align-items:center; justify-content:space-between; gap:10px}
+  .team{display:flex; flex-direction:column; align-items:center; gap:6px; width:96px}
+  .flag{width:46px; height:46px; border-radius:50%; display:flex; align-items:center; justify-content:center;
+    font-size:22px; border:1px solid var(--line)}
+  .bra{background:#0a3a1f} .jpn{background:#3a0a14}
+  .tname{font-size:13px; font-weight:700}
+  .vs{font-size:12px; color:var(--mut); font-weight:700}
+  .meta{text-align:center; font-size:11.5px; color:var(--mut); margin-top:12px; line-height:1.5}
+  .live{display:inline-block; background:var(--no-bg); color:var(--no); border:1px solid var(--no-bd);
+    font-size:10px; font-weight:800; padding:2px 7px; border-radius:6px; letter-spacing:.4px; margin-bottom:8px}
+
+  .card{background:var(--panel); border:1px solid var(--line); border-radius:16px; padding:15px 15px 13px; margin-bottom:13px}
+  .qrow{display:flex; align-items:center; justify-content:space-between; margin-bottom:3px}
+  .q{font-size:14.5px; font-weight:700; line-height:1.3}
+  .vol{font-size:11px; color:var(--mut2); margin-top:2px}
+  .chance{display:flex; align-items:flex-end; gap:8px; margin:10px 0 12px}
+  .chance .big{font-size:40px; font-weight:800; line-height:.95; letter-spacing:-1px}
+  .chance .lab{font-size:12px; color:var(--mut); font-weight:600; padding-bottom:5px}
+  .bar{height:7px; border-radius:6px; background:#0e1418; overflow:hidden; margin:0 0 13px}
+  .bar > i{display:block; height:100%; background:var(--yes); border-radius:6px}
+
+  .yn{display:grid; grid-template-columns:1fr 1fr; gap:9px}
+  .btn{border-radius:11px; padding:11px 8px; text-align:center; cursor:pointer; border:1px solid; user-select:none}
+  .btn .t{font-size:12.5px; font-weight:800; letter-spacing:.2px}
+  .btn .p{font-size:12px; font-weight:700; margin-top:2px; opacity:.85}
+  .y{background:var(--yes-bg); border-color:var(--yes-bd); color:var(--yes)}
+  .n{background:var(--no-bg); border-color:var(--no-bd); color:var(--no)}
+  .btn:active{transform:scale(.985)}
+
+  .out{display:flex; align-items:center; justify-content:space-between; padding:11px 4px; border-top:1px solid var(--line)}
+  .out:first-of-type{border-top:none}
+  .out .l{display:flex; align-items:center; gap:10px}
+  .out .nm{font-size:13.5px; font-weight:700}
+  .out .sub{font-size:11px; color:var(--mut2)}
+  .pill{min-width:54px; text-align:center; font-size:13px; font-weight:800; padding:8px 10px; border-radius:9px}
+  .pill.y{background:var(--yes-bg); border:1px solid var(--yes-bd); color:var(--yes)}
+  .badge{font-size:9.5px; font-weight:800; padding:2px 6px; border-radius:5px; background:var(--mint); color:#04201a; letter-spacing:.3px}
+
+  .model{background:var(--panel2); border:1px solid var(--line); border-radius:16px; padding:15px; margin-bottom:13px}
+  .mh{font-size:12px; font-weight:800; color:var(--mint); letter-spacing:.4px; text-transform:uppercase; margin-bottom:11px; display:flex; align-items:center; gap:7px}
+  .xg{display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:13px}
+  .xgcell{background:#0e141a; border:1px solid var(--line); border-radius:11px; padding:11px}
+  .xgcell .k{font-size:11px; color:var(--mut)}
+  .xgcell .v{font-size:24px; font-weight:800; margin-top:3px}
+  .scoreline{display:flex; align-items:center; justify-content:space-between; font-size:12.5px; padding:6px 2px; border-top:1px dashed var(--line)}
+  .scoreline:first-of-type{border-top:none}
+  .scoreline .s{font-weight:700}
+  .scoreline .pc{color:var(--mut); font-weight:700}
+  .note{font-size:11px; color:var(--mut2); line-height:1.6; margin-top:11px; padding-top:11px; border-top:1px solid var(--line)}
+
+  .stake{background:var(--panel); border:1px solid var(--line); border-radius:16px; padding:15px; margin-bottom:6px}
+  .stake .row{display:flex; justify-content:space-between; font-size:12.5px; padding:6px 0; border-top:1px solid var(--line)}
+  .stake .row:first-of-type{border-top:none}
+  .stake .row b{font-weight:800}
+  .disc{font-size:10.5px; color:var(--mut2); line-height:1.6; margin-top:10px}
+  .foot{text-align:center; font-size:10px; color:var(--mut2); margin-top:16px; letter-spacing:.3px}
+</style>
+</head>
+<body>
+<div class="phone">
+
+  <div class="topbar">
+    <div class="brand"><span class="dot">P</span> PitchPredict</div>
+    <div class="bal">$50.00</div>
+  </div>
+
+  <div class="scroll">
+    <div class="crumb">World Cup 2026 · Round of 32</div>
+
+    <div class="event">
+      <div style="text-align:center"><span class="live">● KICKOFF JUN 29 · 1:00 PM ET</span></div>
+      <div class="teams">
+        <div class="team"><div class="flag bra">🇧🇷</div><div class="tname">Brazil</div><div class="vs">Won Group C</div></div>
+        <div class="vs">VS</div>
+        <div class="team"><div class="flag jpn">🇯🇵</div><div class="tname">Japan</div><div class="vs">2nd Group F</div></div>
+      </div>
+      <div class="meta">Houston Stadium, Texas · Winner advances to Round of 16<br>Model: opponent-adjusted Poisson (PitchPredict Blueprint)</div>
+    </div>
+
+    <!-- MAIN MARKET: advancement -->
+    <div class="card">
+      <div class="qrow"><div class="q">Will Brazil advance to the Round of 16?</div></div>
+      <div class="vol">Includes extra time &amp; penalties · Est. vol $4.2k</div>
+      <div class="chance"><div class="big">74<span style="font-size:22px">%</span></div><div class="lab">model chance · Yes</div></div>
+      <div class="bar"><i style="width:74%"></i></div>
+      <div class="yn">
+        <div class="btn y"><div class="t">Buy YES</div><div class="p">74¢</div></div>
+        <div class="btn n"><div class="t">Buy NO</div><div class="p">26¢</div></div>
+      </div>
+    </div>
+
+    <!-- MATCH RESULT (90 min) -->
+    <div class="card">
+      <div class="qrow"><div class="q">Match result in 90 minutes</div></div>
+      <div class="vol">Regulation time only · 3-way market</div>
+      <div style="height:8px"></div>
+      <div class="out">
+        <div class="l"><span class="flag bra" style="width:30px;height:30px;font-size:15px">🇧🇷</span>
+          <div><div class="nm">Brazil win <span class="badge">MODEL PICK</span></div><div class="sub">xG 2.09 · scored 7, conceded 1 in group</div></div></div>
+        <div class="pill y">63¢</div>
+      </div>
+      <div class="out">
+        <div class="l"><span class="flag" style="width:30px;height:30px;font-size:15px;background:#23282e">🤝</span>
+          <div><div class="nm">Draw</div><div class="sub">High draw risk flag · goes to ET</div></div></div>
+        <div class="pill y">20¢</div>
+      </div>
+      <div class="out">
+        <div class="l"><span class="flag jpn" style="width:30px;height:30px;font-size:15px">🇯🇵</span>
+          <div><div class="nm">Japan win</div><div class="sub">xG 0.98 · scored 7, conceded 3 in group</div></div></div>
+        <div class="pill y">17¢</div>
+      </div>
+    </div>
+
+    <!-- GOALS MARKETS -->
+    <div class="card">
+      <div class="qrow"><div class="q">Total goals over 2.5?</div></div>
+      <div class="vol">Combined xG 3.07</div>
+      <div class="chance"><div class="big">59<span style="font-size:22px">%</span></div><div class="lab">model chance · Yes</div></div>
+      <div class="bar"><i style="width:59%"></i></div>
+      <div class="yn">
+        <div class="btn y"><div class="t">Over 2.5</div><div class="p">59¢</div></div>
+        <div class="btn n"><div class="t">Under 2.5</div><div class="p">41¢</div></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="qrow"><div class="q">Both teams to score?</div></div>
+      <div class="vol">Brazil ~88% to score · Japan ~62% to score</div>
+      <div class="chance"><div class="big">55<span style="font-size:22px">%</span></div><div class="lab">model chance · Yes</div></div>
+      <div class="bar"><i style="width:55%"></i></div>
+      <div class="yn">
+        <div class="btn y"><div class="t">BTTS Yes</div><div class="p">55¢</div></div>
+        <div class="btn n"><div class="t">BTTS No</div><div class="p">45¢</div></div>
+      </div>
+    </div>
+
+    <!-- MODEL BREAKDOWN -->
+    <div class="model">
+      <div class="mh">⚙ PitchPredict model · why these numbers</div>
+      <div class="xg">
+        <div class="xgcell"><div class="k">Brazil expected goals</div><div class="v" style="color:var(--yes)">2.09</div></div>
+        <div class="xgcell"><div class="k">Japan expected goals</div><div class="v">0.98</div></div>
+      </div>
+      <div style="font-size:11px;color:var(--mut);font-weight:700;margin-bottom:7px">Most likely scorelines (Poisson)</div>
+      <div class="scoreline"><span class="s">Brazil 2 – 0 Japan</span><span class="pc">10.1%</span></div>
+      <div class="scoreline"><span class="s">Brazil 2 – 1 Japan</span><span class="pc">9.9%</span></div>
+      <div class="scoreline"><span class="s">Brazil 1 – 0 Japan</span><span class="pc">9.7%</span></div>
+      <div class="scoreline"><span class="s">Brazil 1 – 1 Japan</span><span class="pc">9.5%</span></div>
+      <div class="scoreline"><span class="s">Brazil 3 – 0 Japan</span><span class="pc">7.0%</span></div>
+      <div class="note">Ratings calibrated from pre-tournament strength (Brazil ≈ top-5, Japan ≈ top-18) blended with opponent-adjusted 2026 group form. Houston crowd modeled as a small Brazil location boost. No single scoreline is ever "likely" — the headline is the <b>winner and the probability</b>, not the score.</div>
+    </div>
+
+    <!-- STAKING -->
+    <div class="stake">
+      <div class="mh" style="color:var(--mint)">💰 Suggested stake · $50 bankroll</div>
+      <div class="row"><span>Brazil to advance @ 74¢</span><b style="color:var(--yes)">¼-Kelly: $6–8</b></div>
+      <div class="row"><span>Over 2.5 goals @ 59¢</span><b style="color:var(--yes)">¼-Kelly: $3–4</b></div>
+      <div class="row"><span>Japan win @ 17¢ (longshot hedge)</span><b style="color:var(--mut)">skip / tiny</b></div>
+      <div class="disc">Stakes use fractional-Kelly sizing only where the model's price differs from a typical book line. These are model outputs for tracking, <b>not financial advice</b> and not a guarantee. A 74% pick still loses ~1 time in 4. Never stake money you can't afford to lose, and check that prediction markets are legal where you live.</div>
+    </div>
+
+    <div class="foot">PITCHPREDICT · POISSON MODEL · 2026 WORLD CUP · FOR ENTERTAINMENT</div>
+  </div>
+</div>
+</body>
+</html>

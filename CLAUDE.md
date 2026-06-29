@@ -81,8 +81,7 @@ only then consider ML (XGBoost). Don't skip steps.
 | File | What it is |
 |---|---|
 | `PitchPredict Blueprint 2.pdf` | The methodology guide. Source of truth for the approach. |
-| `WorldCup_R32_Predictor.html` | **Main deliverable.** Self-contained interactive Kalshi-style app: flags grid → match stats/odds → bet ticket (multiplier, edge, ¼-Kelly recommendation) → live portfolio (persists via localStorage) → tournament growth projection. Open in any browser. |
-| `Brazil_vs_Japan_Kalshi.html` | Earlier single-match mockup (Brazil vs Japan). Kept for reference. |
+| `index.html` | **Main deliverable.** Self-contained interactive Kalshi-style app: flags grid → match stats/odds → bet ticket (multiplier, edge, ¼-Kelly recommendation) → live portfolio (persists via localStorage) → tournament growth projection. Open in any browser. |
 | `r32_data.json` | Model output for all 16 R32 matches (xG, W/D/L, advancement, over 2.5, BTTS, top scorelines). The HTML embeds a copy; the bot reads this file. |
 | `kalshi_bot.py` | Trading-bot **skeleton**. Reads `r32_data.json`, is built to pull live Kalshi prices, find edges, size ¼-Kelly. `DRY_RUN=True` — prints only, places nothing. Auth + order endpoints are stubbed with TODOs. |
 | `CLAUDE.md` | This handoff file. |
@@ -154,13 +153,13 @@ def match(a, b, T):
 
 To re-tune: adjust `(Attack, Defense)` in Section 5, re-run, regenerate
 `r32_data.json`, and paste the new array into the `const DATA = [...]` block near
-the top of the `<script>` in `WorldCup_R32_Predictor.html`.
+the top of the `<script>` in `index.html`.
 
 ---
 
 ## 7. How to run / use
 
-- **App:** double-click `WorldCup_R32_Predictor.html` (or `open` it). No server
+- **App:** double-click `index.html` (or `open` it). No server
   needed. Portfolio + bankroll persist in the browser via `localStorage`
   (keys `pp_bank`, `pp_pos`). Click the portfolio value to change the bankroll.
 - **Bot (dry run):** `python3 kalshi_bot.py` — prints recommended trades, places

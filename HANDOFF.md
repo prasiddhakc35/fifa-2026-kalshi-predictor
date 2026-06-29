@@ -37,8 +37,7 @@ Everything lives in:
 |---|---|---|
 | `/Users/prasiddhakc/Claude/Projects/Fifa Kalshi prediction/CLAUDE.md` | 12K | **Master handoff / project memory.** Goals, honesty rules, full model methodology, team ratings, rebuild instructions, roadmap, conventions. Auto-loads when the folder opens. |
 | `/Users/prasiddhakc/Claude/Projects/Fifa Kalshi prediction/HANDOFF.md` | this file | Quick-reference handoff with all paths + run steps. |
-| `/Users/prasiddhakc/Claude/Projects/Fifa Kalshi prediction/WorldCup_R32_Predictor.html` | 32K | **Main deliverable.** Self-contained interactive Kalshi-style app: flags grid → match stats/odds → bet ticket (multiplier, edge, ¼-Kelly) → live portfolio (persists via `localStorage`) → growth projection. Open in any browser, no server. |
-| `/Users/prasiddhakc/Claude/Projects/Fifa Kalshi prediction/Brazil_vs_Japan_Kalshi.html` | 12K | Earlier single-match mockup (Brazil vs Japan). Reference only. |
+| `/Users/prasiddhakc/Claude/Projects/Fifa Kalshi prediction/index.html` | 32K | **Main deliverable.** Self-contained interactive Kalshi-style app: flags grid → match stats/odds → bet ticket (multiplier, edge, ¼-Kelly) → live portfolio (persists via `localStorage`) → growth projection. Open in any browser, no server. |
 | `/Users/prasiddhakc/Claude/Projects/Fifa Kalshi prediction/r32_data.json` | 8K | **Model output**, list of 16 R32 matches. Per-match keys: `id, date, venue, a, af, asum, b, bf, bsum, xgA, xgB, pA, pD, pB, advA, advB, over25, btts, scores`. The HTML embeds a copy; the bot reads this file. |
 | `/Users/prasiddhakc/Claude/Projects/Fifa Kalshi prediction/kalshi_bot.py` | 8K | **Trading-bot skeleton.** Reads `r32_data.json`, built to pull live Kalshi prices, find edges, size ¼-Kelly. `DRY_RUN=True` (prints only, places nothing). Auth + order endpoints are TODO stubs. |
 | `/Users/prasiddhakc/Claude/Projects/Fifa Kalshi prediction/PitchPredict Blueprint 2.pdf` | 128K | The methodology guide / source of truth for the approach. |
@@ -70,7 +69,7 @@ Ratings are **calibrated** (pre-tournament priors blended with group-stage form)
 
 **App:**
 ```
-open "/Users/prasiddhakc/Claude/Projects/Fifa Kalshi prediction/WorldCup_R32_Predictor.html"
+open "/Users/prasiddhakc/Claude/Projects/Fifa Kalshi prediction/index.html"
 ```
 No server. Bankroll/portfolio persist in the browser (`localStorage` keys
 `pp_bank`, `pp_pos`). Click the portfolio value to change the bankroll.
@@ -90,7 +89,7 @@ top: `DRY_RUN`, `BANKROLL`, `KELLY_FRACTION=0.25`, `MIN_EDGE_CENTS=3`.
 pip install scipy numpy --break-system-packages
 ```
 Use the logic in `CLAUDE.md` §6 to regenerate `r32_data.json`, then re-embed the
-new array into the `const DATA = [...]` block in `WorldCup_R32_Predictor.html`.
+new array into the `const DATA = [...]` block in `index.html`.
 The JSON and the HTML copy must not drift apart.
 
 ---
